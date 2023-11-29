@@ -15,6 +15,7 @@ public class UserRegistrationController {
     public UserRegistrationController(UserService userService){
         this.userService = userService;
     }
+
     @GetMapping("/register")
     public String register(){
         return "auth-register";
