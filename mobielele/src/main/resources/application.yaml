@@ -8,3 +8,4 @@ spring:
       database-platform: org.hibernate.dialect.MySQLDialect
       hibernate:
         ddl-auto: create-drop
+    sql:
