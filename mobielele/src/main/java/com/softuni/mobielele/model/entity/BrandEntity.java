@@ -8,14 +8,14 @@ import jakarta.persistence.Table;
 @Table(name = "brands")
 public class BrandEntity extends BaseEntity{
     @Column(unique = true, nullable = false)
-    private String name;
+    private String brand;
 
-    public String getName() {
-        return name;
+    public String getBrand() {
+        return brand;
     }
 
-    public BrandEntity setName(String name) {
-        this.name = name;
+    public BrandEntity setBrand(String brand) {
+        this.brand = brand;
         return this;
     }
 }
