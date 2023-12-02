@@ -1,9 +1,10 @@
-package com.softuni.mobielele.service;
+package com.softuni.mobielele.service.impl;
 
 import com.softuni.mobielele.model.dto.BrandDto;
 import com.softuni.mobielele.model.dto.ModelDto;
 import com.softuni.mobielele.model.entity.ModelEntity;
 import com.softuni.mobielele.repository.ModelRepository;
+import com.softuni.mobielele.service.BrandService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

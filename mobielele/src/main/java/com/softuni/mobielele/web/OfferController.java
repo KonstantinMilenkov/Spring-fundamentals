@@ -4,14 +4,16 @@ import com.softuni.mobielele.model.dto.CreateOfferDTO;
 import com.softuni.mobielele.model.enums.EngineEnum;
 import com.softuni.mobielele.service.BrandService;
 import com.softuni.mobielele.service.OfferService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/offers")
+@RequestMapping("/offer")
 public class OfferController {
     private final OfferService offerService;
     private final BrandService brandService;
@@ -32,13 +34,17 @@ public class OfferController {
     }
     @GetMapping("/add")
     public String add(Model model){
+        if (model.containsAttribute("createOfferDto")){
+            model.addAttribute("createOfferDto", new CreateOfferDTO());
+        }
 
         model.addAttribute("brands", brandService.getAllBrands());
 
         return "offer-add";
     }
     @PostMapping("/add")
-    public String add(CreateOfferDTO createOfferDTO){
+    public String add(@Valid CreateOfferDTO createOfferDTO,
+                      BindingResult bindingResult){
 
         offerService.createOffer(createOfferDTO);
 
