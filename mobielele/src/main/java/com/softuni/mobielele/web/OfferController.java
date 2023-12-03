@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.UUID;
 
@@ -25,33 +26,48 @@ public class OfferController {
     }
 
     @GetMapping("/all")
-    public String all(){
+    public String all() {
         return "offers";
     }
+
     @ModelAttribute("engines")
-    public EngineEnum[] engine(){
+    public EngineEnum[] engines() {
         return EngineEnum.values();
     }
+
     @GetMapping("/add")
-    public String add(Model model){
-        if (model.containsAttribute("createOfferDto")){
-            model.addAttribute("createOfferDto", new CreateOfferDTO());
+    public String add(Model model) {
+
+        if (!model.containsAttribute("createOfferDTO")) {
+            model.addAttribute("createOfferDTO", CreateOfferDTO.empty());
         }
 
         model.addAttribute("brands", brandService.getAllBrands());
 
         return "offer-add";
     }
+
     @PostMapping("/add")
-    public String add(@Valid CreateOfferDTO createOfferDTO,
-                      BindingResult bindingResult){
+    public String add(
+            @Valid CreateOfferDTO createOfferDTO,
+            BindingResult bindingResult,
+            RedirectAttributes rAtt
+            ) {
 
-        offerService.createOffer(createOfferDTO);
+        if(bindingResult.hasErrors()){
+            rAtt.addFlashAttribute("createOfferDTO", createOfferDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.createOfferDTO", bindingResult);
+            return "redirect:/offer/add";
+        }
 
-        return "index";
+
+        UUID newOfferUUID = offerService.createOffer(createOfferDTO);
+
+        return "redirect:/offer/" + newOfferUUID;
     }
+
     @GetMapping("/{uuid}/details")
-    public String details(@PathVariable("uuid") UUID uuid){
+    public String details(@PathVariable("uuid") UUID uuid) {
         return "details";
     }
 }

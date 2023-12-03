@@ -3,6 +3,10 @@ package com.softuni.mobielele.model.entity;
 import com.softuni.mobielele.model.enums.EngineEnum;
 import com.softuni.mobielele.model.enums.Transmission;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import java.math.BigDecimal;
@@ -12,26 +16,48 @@ import java.util.UUID;
 @Entity
 @Table(name = "offers")
 public class OfferEntity extends BaseEntity{
+    @NotNull
     @JdbcTypeCode(Types.VARCHAR)
     private UUID uuid;
-
+    @NotEmpty
     private String description;
+    @NotNull
     @ManyToOne
     private ModelEntity model;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    private EngineEnum engineEnum;
-
+    private EngineEnum engine;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Transmission transmission;
-    private String imageURL;
-    private long mileage;
+
+    @ManyToOne
+    private UserEntity seller;
+
+    @NotEmpty
+    private String imageUrl;
+
+    @Positive
+    private int mileage;
+
+    @NotNull
     private BigDecimal price;
+
+    @Min(1930)
     private int year;
+
+    public String getDescription() {
+        return description;
+    }
 
     public OfferEntity setDescription(String description) {
         this.description = description;
         return this;
+    }
+
+    public ModelEntity getModel() {
+        return model;
     }
 
     public OfferEntity setModel(ModelEntity model) {
@@ -39,9 +65,17 @@ public class OfferEntity extends BaseEntity{
         return this;
     }
 
-    public OfferEntity setEngineEnum(EngineEnum engineEnum) {
-        this.engineEnum = engineEnum;
+    public EngineEnum getEngine() {
+        return engine;
+    }
+
+    public OfferEntity setEngine(EngineEnum engine) {
+        this.engine = engine;
         return this;
+    }
+
+    public Transmission getTransmission() {
+        return transmission;
     }
 
     public OfferEntity setTransmission(Transmission transmission) {
@@ -49,14 +83,26 @@ public class OfferEntity extends BaseEntity{
         return this;
     }
 
-    public OfferEntity setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public OfferEntity setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
         return this;
     }
 
-    public OfferEntity setMileage(long mileage) {
+    public int getMileage() {
+        return mileage;
+    }
+
+    public OfferEntity setMileage(int mileage) {
         this.mileage = mileage;
         return this;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
     }
 
     public OfferEntity setPrice(BigDecimal price) {
@@ -64,41 +110,13 @@ public class OfferEntity extends BaseEntity{
         return this;
     }
 
+    public int getYear() {
+        return year;
+    }
+
     public OfferEntity setYear(int year) {
         this.year = year;
         return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public ModelEntity getModel() {
-        return model;
-    }
-
-    public EngineEnum getEngineEnum() {
-        return engineEnum;
-    }
-
-    public Transmission getTransmission() {
-        return transmission;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public long getMileage() {
-        return mileage;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public int getYear() {
-        return year;
     }
 
     public UUID getUuid() {
@@ -107,6 +125,15 @@ public class OfferEntity extends BaseEntity{
 
     public OfferEntity setUuid(UUID uuid) {
         this.uuid = uuid;
+        return this;
+    }
+
+    public UserEntity getSeller() {
+        return seller;
+    }
+
+    public OfferEntity setSeller(UserEntity seller) {
+        this.seller = seller;
         return this;
     }
 }

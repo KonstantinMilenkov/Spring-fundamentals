@@ -1,9 +1,9 @@
 package com.softuni.mobielele.service;
 
-import com.softuni.mobielele.model.dto.BrandDto;
+import com.softuni.mobielele.model.dto.BrandDTO;
 
 import java.util.List;
 
 public interface BrandService {
-    List<BrandDto> getAllBrands();
+    List<BrandDTO> getAllBrands();
 }

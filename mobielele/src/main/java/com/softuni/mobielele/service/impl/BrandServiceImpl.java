@@ -1,37 +1,34 @@
 package com.softuni.mobielele.service.impl;
 
-import com.softuni.mobielele.model.dto.BrandDto;
-import com.softuni.mobielele.model.dto.ModelDto;
-import com.softuni.mobielele.model.entity.ModelEntity;
-import com.softuni.mobielele.repository.ModelRepository;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import com.softuni.mobielele.model.dto.BrandDTO;
+import com.softuni.mobielele.model.dto.ModelDTO;
+import com.softuni.mobielele.repository.BrandRepository;
 import com.softuni.mobielele.service.BrandService;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
 @Service
 public class BrandServiceImpl implements BrandService {
-    private ModelRepository modelRepository;
+    private final BrandRepository brandRepository;
 
-    public BrandServiceImpl(ModelRepository modelRepository) {
-        this.modelRepository = modelRepository;
+    public BrandServiceImpl(BrandRepository brandRepository) {
+        this.brandRepository = brandRepository;
     }
 
     @Override
-    public List<BrandDto> getAllBrands() {
+    public List<BrandDTO> getAllBrands() {
 
-
-        Map<String, BrandDto> brands = new TreeMap<>();
-
-        for (ModelEntity model: modelRepository.findAll()){
-            if (!brands.containsKey(model.getBrand().getBrand())) {
-                brands.put(model.getBrand().getBrand(),
-                        new BrandDto(model.getBrand().getBrand(),
-                                new ArrayList<>()));
-            }
-            brands.get(model.getBrand().getBrand()).models().add(
-                    new ModelDto(model.getId(), model.getName()));
-        }
-
-        return brands.values().stream().toList();
+        return brandRepository.getAllBrands().stream()
+                .map(brand -> new BrandDTO(
+                        brand.getName(),
+                        brand.getModels().stream()
+                                .map(model -> new ModelDTO(model.getId(), model.getName()))
+                                .sorted(Comparator.comparing(ModelDTO::name))
+                                .collect(Collectors.toList())
+                ))
+                .sorted(Comparator.comparing(BrandDTO::name))
+                .collect(Collectors.toList());
     }
 }
