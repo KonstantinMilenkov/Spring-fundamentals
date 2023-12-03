@@ -3,10 +3,8 @@ package com.softuni.mobielele.service.impl;
 import com.softuni.mobielele.model.dto.CreateOfferDTO;
 import com.softuni.mobielele.model.entity.ModelEntity;
 import com.softuni.mobielele.model.entity.OfferEntity;
-import com.softuni.mobielele.model.entity.UserEntity;
 import com.softuni.mobielele.repository.ModelRepository;
 import com.softuni.mobielele.repository.OfferRepository;
-import com.softuni.mobielele.repository.UserRepository;
 import com.softuni.mobielele.service.OfferService;
 import org.springframework.stereotype.Service;
 

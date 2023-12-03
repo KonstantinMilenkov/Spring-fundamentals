@@ -66,7 +66,7 @@ public class OfferController {
         return "redirect:/offer/" + newOfferUUID;
     }
 
-    @GetMapping("/{uuid}/details")
+    @GetMapping("/{uuid}")
     public String details(@PathVariable("uuid") UUID uuid) {
         return "details";
     }
