@@ -6,7 +6,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "brands")
-public class BrandEntity extends BaseEntity{
+@NamedEntityGraph(
+        name = "brandWithModels",
+        attributeNodes = @NamedAttributeNode("models")
+)
+public class BrandEntity extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String name;
 

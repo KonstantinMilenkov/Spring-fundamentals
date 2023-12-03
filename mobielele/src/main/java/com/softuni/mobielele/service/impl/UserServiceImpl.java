@@ -1,15 +1,13 @@
 package com.softuni.mobielele.service.impl;
 
 import com.softuni.mobielele.model.dto.UserLoginDto;
-import com.softuni.mobielele.model.dto.UserRegistrationDto;
+import com.softuni.mobielele.model.dto.UserRegistrationDTO;
 import com.softuni.mobielele.model.entity.UserEntity;
 import com.softuni.mobielele.repository.UserRepository;
 import com.softuni.mobielele.service.UserService;
 import com.softuni.mobielele.util.CurrentUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,7 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void registerUser(UserRegistrationDto userRegistrationDto) {
+    public void registerUser(UserRegistrationDTO userRegistrationDto) {
         userRepository.save(map(userRegistrationDto));
     }
 
@@ -60,7 +58,7 @@ public class UserServiceImpl implements UserService {
         currentUser.logout();
     }
 
-    private UserEntity map(UserRegistrationDto userRegistrationDTO) {
+    private UserEntity map(UserRegistrationDTO userRegistrationDTO) {
         return new UserEntity()
                 .setActive(true)
                 .setFirstName(userRegistrationDTO.firstName())

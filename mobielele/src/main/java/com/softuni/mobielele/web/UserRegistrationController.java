@@ -1,6 +1,6 @@
 package com.softuni.mobielele.web;
 
-import com.softuni.mobielele.model.dto.UserRegistrationDto;
+import com.softuni.mobielele.model.dto.UserRegistrationDTO;
 import com.softuni.mobielele.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class UserRegistrationController {
         return "auth-register";
     }
     @PostMapping("/register")
-    public String register(UserRegistrationDto userRegistrationDto){
+    public String register(UserRegistrationDTO userRegistrationDto){
 
         userService.registerUser(userRegistrationDto);
 

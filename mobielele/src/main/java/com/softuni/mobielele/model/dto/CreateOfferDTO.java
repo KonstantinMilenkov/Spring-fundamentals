@@ -2,9 +2,8 @@ package com.softuni.mobielele.model.dto;
 
 import com.softuni.mobielele.model.enums.EngineEnum;
 import com.softuni.mobielele.model.enums.Transmission;
+import com.softuni.mobielele.model.validation.YearNotInTheFuture;
 import jakarta.validation.constraints.*;
-
-import java.util.Objects;
 
 
 public record CreateOfferDTO(@NotEmpty @Size(min = 5, max = 512) String description,
@@ -12,6 +11,7 @@ public record CreateOfferDTO(@NotEmpty @Size(min = 5, max = 512) String descript
                              @NotNull Transmission transmission, @NotEmpty String imageUrl,
                              @Positive @NotNull Integer mileage,
                              @Positive @NotNull Integer price,
+                             @YearNotInTheFuture(message = "The year should not be in the future!")
                              @NotNull(message = "Year must be provided!")
                              @Min(1930)
                              Integer year) {
